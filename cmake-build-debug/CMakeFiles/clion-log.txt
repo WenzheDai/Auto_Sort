@@ -1,0 +1,4 @@
+/home/pi/cmake-3.22.2/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /tmp/tmp.1boLtVkqA3
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/tmp.1boLtVkqA3/cmake-build-debug
