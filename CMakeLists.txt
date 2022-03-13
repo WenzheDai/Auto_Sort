@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.21)
 project(Auto_Sort)
 
-add_definitions("-Wall -lpthread -g")
-
 set(CMAKE_CXX_STANDARD 11)
-add_executable(Auto_Sort main.cpp)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+
+add_executable(Auto_Sort main.cpp motor_control.h motor_control.cpp)
 
 set(SOURCE_FILES main.cpp)
 #
