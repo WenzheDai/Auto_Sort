@@ -11,9 +11,8 @@ using namespace std;
 class motor_control
 {
 public:
-    int IN1, IN2, IN3, IN4;
     //set the GPIO level
-    void setMode(int IN, int putNum);
+    void setMode();
 
     //set the direction if rotation
     void setStep(int h1, int h2, int h3, int h4);
@@ -21,8 +20,11 @@ public:
     //pull up the high-level GPIO's resistance
     void setPullUpDown(int h1, int h2, int h3, int h4);
 
-    //the number of loops is calculated by the angle
-    int motor_angle(int angle);
+    //control the motor forward rotation
+    void motor_forward(int cir);
+
+    //control the motor reverse rotation
+    void motor_reverse(int cir);
 
 };
 

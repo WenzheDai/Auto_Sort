@@ -2,28 +2,20 @@
 #include "pigpio.h"
 #include "motor_control.h"
 
-void motor_control::setMode(int IN, int putNum)
+void motor_control::setMode()
 {
-    if(putNum == 0)
-    {
-        gpioSetMode(IN, PI_OUTPUT);
-    }
-    else if(putNum == 1)
-    {
-        gpioSetMode(IN,PI_INPUT);
-    }
-    else
-    {
-        printf("putNum only is 0 or 1");
-    }
+    gpioSetMode(6,PI_OUTPUT);
+    gpioSetMode(13, PI_OUTPUT);
+    gpioSetMode(19, PI_OUTPUT);
+    gpioSetMode(26, PI_OUTPUT);
 }
 
 void motor_control::setStep(int h1, int h2, int h3, int h4)
 {
-    gpioWrite(IN1, h1);
-    gpioWrite(IN2, h2);
-    gpioWrite(IN3, h3);
-    gpioWrite(IN4, h4);
+    gpioWrite(6, h1);
+    gpioWrite(13, h2);
+    gpioWrite(19, h3);
+    gpioWrite(26, h4);
 }
 
 void motor_control::setPullUpDown(int h1, int h2, int h3, int h4)
@@ -62,10 +54,46 @@ void motor_control::setPullUpDown(int h1, int h2, int h3, int h4)
     }
 }
 
-int motor_control::motor_angle(int angle)
+void motor_control::motor_forward(int cir)
 {
-    int j = (int)(angle/0.70312);
-    return j;
+    for(int i = 0;i<cir;i++)
+    {
+        setPullUpDown(1, 0, 0, 0);
+        setStep(1, 0, 0, 0);
+        gpioSleep(PI_TIME_RELATIVE,0,2000);  //every impulse delay 2000ms
+        setPullUpDown(0, 1, 0, 0);
+        setStep(0, 1, 0, 0);
+        gpioSleep(PI_TIME_RELATIVE,0,2000);
+        setPullUpDown(0, 0, 1, 0);
+        setStep(0, 0, 1, 0);
+        gpioSleep(PI_TIME_RELATIVE,0,2000);
+        setPullUpDown(0, 0, 0, 1);
+        setStep(0, 0, 0, 1);
+        gpioSleep(PI_TIME_RELATIVE,0,2000);
+    }
+}
+
+void motor_control::motor_reverse(int cir)
+{
+    for(int i = 0;i<cir;i++)
+    {
+        setPullUpDown(0, 0, 0, 1);
+        setStep(0, 0, 0, 1);
+        gpioSleep(PI_TIME_RELATIVE,0,2000);  //every impulse delay 2000ms
+
+        setPullUpDown(0, 0, 1, 0);
+        setStep(0, 0, 1, 0);
+        gpioSleep(PI_TIME_RELATIVE,0,2000);
+
+        setPullUpDown(0, 1, 0, 0);
+        setStep(0, 1, 0, 0);
+        gpioSleep(PI_TIME_RELATIVE,0,2000);
+
+        setPullUpDown(1, 0, 0, 0);
+        setStep(1, 0, 0, 0);
+        gpioSleep(PI_TIME_RELATIVE,0,2000);
+    }
+
 }
 
 
