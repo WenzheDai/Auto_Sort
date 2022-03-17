@@ -1,45 +1,11 @@
-#include "pigpio.h"
-#include "motor_control.h"
-#include <iostream>
-using namespace std;
-//the GPIO is 6 13 19 26
+#include "mainwindow.h"
 
-int angle(int angle)
+#include <QApplication>
+
+int main(int argc, char *argv[])
 {
-    int j = (int)(angle/0.70312);
-    return j;
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }
-
-int motor()
-{
-    if (gpioInitialise()<0) return -1;    //init the librarys of pigpio
-    motor_control pi;
-    pi.setMode();
-    //pi.motor_forward(cir);
-    pi.motor_reverse(angle(120));
-    gpioTerminate();  //stop the pigpio
-}
-
-void callback(int (*p)())
-{
-    p();
-}
-
-int main()
-{
-    callback(motor);
-    return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
