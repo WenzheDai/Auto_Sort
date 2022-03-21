@@ -65,7 +65,7 @@ void Detecting::processMask(Mat& mMask, Object_Detect &mObject, string mColor)
     vector<Point> point;
 
     //find contours of filtered image using openCV findContours function
-    findContours(temp, contours, hierarchy, RETR_CCOMP, CHAIN_APPROX_SIMPLE, Point());
+    findContours(temp, contours, hierarchy,CV_RETR_CCOMP,CV_CHAIN_APPROX_SIMPLE, Point());
     //use moments method to find our filtered object
     //double refArea = 0;
     bool objectFound = false;
@@ -94,20 +94,29 @@ void Detecting::processMask(Mat& mMask, Object_Detect &mObject, string mColor)
              {
                  int cx = int(moment.m10 / area);
                  int cy = int(moment.m01 / area);
-                 if(cx>frame.cols*0.25 && cx < frame.cols * 0.75) {
+                 if(cx>frame.cols * 0.25 && cx < frame.cols * 0.75) {
                      circle(frame, Point(cx, cy), 2, Scalar(255, 255, 255), 1, 8, 0);
+                     objectFound = true;
+                     mNum++;
+                     if (mNum == 1) {
+                         mCount++;
+                     }
+                 } else {
+                     mNum = 0;
                  }
 
-                 objectFound = true;
+
              }
              else
              {
                  objectFound = false;
              }
              //let user know you found an object
+             //qDebug("mCount = %d", mCount);
+             mObject.setCount(mCount);
              if(objectFound == true)
               {
-                  int epsilon = 0.05*arcLength(contours[index], true);
+                  int epsilon = shape_param * arcLength(contours[index], true);
                   approxPolyDP(contours[index], point, epsilon, true);
                   //printf("point = %d \n", point.size());
                   qDebug("point.size() = %d", point.size());
@@ -116,7 +125,11 @@ void Detecting::processMask(Mat& mMask, Object_Detect &mObject, string mColor)
                   drawContours(frame, contours, index, (128), 3, 8,hierarchy);
                   mObject.setColor(mColor);
                   mObject.setShape(point.size());
-              }
+                  //mObject.setCount(mCount);
+              }else {
+                  //mObject.setCount(-1);
+             }
+
         }
     }
 }
