@@ -32,7 +32,6 @@ public:
     QTimer *timer_run;
     QTime *time;
     int time_num;
-
     Detecting *mDetecting;
     Object_Detect mObject;
     //检测开关

@@ -65,9 +65,10 @@ void Detecting::processMask(Mat& mMask, Object_Detect &mObject, string mColor)
     vector<Point> point;
 
     //find contours of filtered image using openCV findContours function
-    findContours(temp, contours, hierarchy,CV_RETR_CCOMP,CV_CHAIN_APPROX_SIMPLE, Point());
+    findContours(temp, contours, hierarchy, RETR_CCOMP, CHAIN_APPROX_SIMPLE, Point());
     //use moments method to find our filtered object
-    //double refArea = 0;
+    //double refArea = 0; int minSat = 43, maxSat = 255;
+    int minVal = 46, maxVal = 255;
     bool objectFound = false;
     //vector<vector<Point>> contours_poly(contours.size());//用于存放折线点集
     /*for (int i = 0; i<contours.size(); i++)
@@ -122,7 +123,7 @@ void Detecting::processMask(Mat& mMask, Object_Detect &mObject, string mColor)
                   qDebug("point.size() = %d", point.size());
                   //draw object location on screen
                   //drawObject(objects,cameraFeed);
-                  drawContours(frame, contours, index, (128), 3, 8,hierarchy);
+                  drawContours(frame, contours, index, (128), 1, 8,hierarchy);
                   mObject.setColor(mColor);
                   mObject.setShape(point.size());
                   //mObject.setCount(mCount);
@@ -139,9 +140,9 @@ void Detecting::morphOps(Mat &thresh)
 {
     //创建用于“扩张”和“侵蚀”形象的结构元素。
     //the element chosen here is a 3px by 3px rectangle
-    Mat erodeElement = getStructuringElement( MORPH_RECT,Size(3,3));
+    Mat erodeElement = getStructuringElement( MORPH_RECT,Size(2,2));
     //dilate with larger element so make sure object is nicely visible
-    Mat dilateElement = getStructuringElement( MORPH_RECT,Size(7,7));//8,8
+    Mat dilateElement = getStructuringElement( MORPH_RECT,Size(3,3));//8,8
 
     erode(thresh,thresh,erodeElement);
     erode(thresh,thresh,erodeElement);

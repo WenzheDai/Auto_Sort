@@ -49,6 +49,8 @@ void MainWindow::on_Bt_start_clicked()
     connect(Time_camera, SIGNAL(timeout()), this, SLOT(open_camera_time_click()));
     Time_camera->start(30);//30ms刷新一次camera fps=30
     frame = cap.open(0);
+//    cap.set(cv::CAP_PROP_AUTO_EXPOSURE, 1);
+//    cap.set(cv::CAP_PROP_EXPOSURE, 600);
     if(!cap.isOpened()){
         printf("open camera failed !");
     }
@@ -98,7 +100,7 @@ void MainWindow::open_camera_time_click()
         mUtils->setLED(ui->label_led_green, 0, 16);
     }
 
-    qDebug("state,R = %d", ui->checkBox_R->isChecked());
+    //qDebug("state,R = %d", ui->checkBox_R->isChecked());
     //qDebug("state,Y = %d", ui->checkBox_Y->isChecked());
     //qDebug("state,G = %d", ui->checkBox_G->isChecked());
     //qDebug("m_color = %d", m_color);
@@ -107,9 +109,9 @@ void MainWindow::open_camera_time_click()
 
 
     int mshape = mObject.getShape();
-    QString t_1 =  QString::number(m_color);
+    //QString t_1 =  QString::number(m_color);
     //QString t_1 =  QString::number(mshape);
-    ui->textBrowser_count->setText(t_1);
+    //ui->textBrowser_count->setText(t_1);
     //red, yellow, green, square, circle, triangle
     if(mshape == 3)
     {
@@ -199,9 +201,15 @@ void MainWindow::open_camera_time_click()
     default:
         break;
     }
+    int shape_num = mObject.getCount();
+    if (shape_num >= 0)
+    {
+        ui->textBrowser_count->setText(QString::number(shape_num));
+    }
 
     //创建显示容器
     cvtColor(frame, frame, COLOR_BGR2RGB);
+	cv::resize(frame, frame, Size(380, 280));
     QImage showImage = QImage(frame.data, frame.cols, frame.rows, QImage::Format_RGB888);
     //向容器中添加文件路径为fileName（QString类型）的文件
     scene->addPixmap(QPixmap::fromImage(showImage));
