@@ -1,56 +1,11 @@
-#include "pigpio.h"
-#include "motor_control.h"
-#include <iostream>
-using namespace std;
-//the GPIO is 6 13 19 26
+#include "mainwindow.h"
 
-void set_mode(motor_control pi)
+#include <QApplication>
+
+int main(int argc, char *argv[])
 {
-    pi.setMode(pi.IN1, 0);
-    pi.setMode(pi.IN2,0);
-    pi.setMode(pi.IN3,0);
-    pi.setMode(pi.IN4,0);
-
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }
-
-int main()
-{
-    motor_control pi;
-    pi.IN1 = 6;
-    pi.IN2 = 13;
-    pi.IN3 = 19;
-    pi.IN4 = 26;
-    if (gpioInitialise()<0) return -1;    //init the librarys of pigpio
-    set_mode(pi);
-    int cir = pi.motor_angle(36000);
-    for(int i = 0;i<cir;i++)
-    {
-        pi.setPullUpDown(1, 0, 0, 0);
-        pi.setStep(1, 0, 0, 0);
-        gpioSleep(PI_TIME_RELATIVE,0,2000);  //every impulse delay 2000ms
-        pi.setPullUpDown(0, 1, 0, 0);
-        pi.setStep(0, 1, 0, 0);
-        gpioSleep(PI_TIME_RELATIVE,0,2000);
-        pi.setPullUpDown(0, 0, 1, 0);
-        pi.setStep(0, 0, 1, 0);
-        gpioSleep(PI_TIME_RELATIVE,0,2000);
-        pi.setPullUpDown(0, 0, 0, 1);
-        pi.setStep(0, 0, 0, 1);
-        gpioSleep(PI_TIME_RELATIVE,0,2000);
-    }
-    gpioTerminate();  //stop the pigpio
-    return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
