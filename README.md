@@ -8,3 +8,5 @@ An automatic real-time system for detection and sorting things.
    make
    ```
 3. Run `sudo ./Auto_Sort`
+
+## Hardware Building

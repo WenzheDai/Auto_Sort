@@ -11,9 +11,12 @@ public:
     string getColor();
     void setShape(int mS);
     int getShape();
+    void setCount(int mC);
+    int getCount();
 private:
     string mColor;
     int mShape;
+    int mCount;
 };
 
 #endif // OBJECT_DETECT_H

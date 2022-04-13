@@ -21,3 +21,13 @@ int Object_Detect::getShape()
 {
     return mShape;
 }
+
+void Object_Detect::setCount(int mC)
+{
+    mCount = mC;
+}
+
+int Object_Detect::getCount()
+{
+    return mCount;
+}
