@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(cmake_pro LANGUAGES CXX)
+project(Auto_Sort LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SOURCE_FILES main.cpp)
 
+find_package(pigpio REQUIRED)
 find_package(Qt5 COMPONENTS
         Core
         Gui
@@ -19,10 +20,16 @@ find_package(Qt5 COMPONENTS
         REQUIRED)
 find_package(OpenCV REQUIRED)
 
-add_executable(cmake_pro main.cpp detecting.h ImageUtils.h mainwindow.h object_detect.h detecting.cpp ImageUtils.cpp mainwindow.cpp object_detect.cpp)
+include_directories(${pigpio_INCLUDE_DIRS})
 
-target_link_libraries(cmake_pro ${OpenCV_LIBS})
-target_link_libraries(cmake_pro
+add_executable(Auto_Sort main.cpp detecting.h ImageUtils.h mainwindow.h
+        object_detect.h detecting.cpp ImageUtils.cpp
+        mainwindow.cpp object_detect.cpp motor/motor_control.cpp
+        motor/motor_control.h motor/motorDriver.cpp motor/motorDriver.h motor/motor.h motor/motor.cpp)
+
+target_link_libraries(Auto_Sort pigpio)
+target_link_libraries(Auto_Sort ${OpenCV_LIBS})
+target_link_libraries(Auto_Sort
         Qt5::Core
         Qt5::Gui
         Qt5::Widgets

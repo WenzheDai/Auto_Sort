@@ -20,12 +20,17 @@ public:
     //pull up the high-level GPIO's resistance
     void setPullUpDown(int h1, int h2, int h3, int h4);
 
+    //compute the angle
+    int angle(int angle);
+
     //control the motor forward rotation
     void motor_forward(int cir);
 
     //control the motor reverse rotation
     void motor_reverse(int cir);
 
+    //motor turn
+    int motor_turn(int x);
 };
 
 #endif
