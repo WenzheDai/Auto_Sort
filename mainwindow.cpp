@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    mThread = new thread_motor();
+
     mUtils = new ImageUtils();
     mUtils->setLED(ui->label_led_red, 0, 16);
     mUtils->setLED(ui->label_led_yellow, 0, 16);
@@ -70,7 +72,7 @@ void MainWindow::open_camera_time_click()
     //weightshow.sprintf("%d (g)", ui->horizontalSlider->value());
     //ui->label_set_weight_show->setText(weightshow);
 
-    //取图
+    //get image
     cap.read(frame);
     if(frame.empty()){
         qDebug("frame.empty()");
@@ -115,7 +117,6 @@ void MainWindow::open_camera_time_click()
     //red, yellow, green, square, circle, triangle
     if(mshape == 3)
     {
-
         mUtils->setLED(ui->label_led_Triangle, 1, 16);
         mUtils->setLED(ui->label_led_square, 0, 16);
         mUtils->setLED(ui->label_led_circle, 0, 16);
@@ -141,6 +142,14 @@ void MainWindow::open_camera_time_click()
         if (m_shape == 0){
             if(mObject.getColor()=="red" && mObject.getShape()==3){
                 qDebug("yes,R triangle!");
+                if (mThread->getC() != 1)
+                {
+                    cout<<mThread->getC()<<"***************";
+                    mThread -> setC(0);
+                    mThread -> start();
+                    mThread->terminate();
+                }
+
             }
 
         }
@@ -154,7 +163,6 @@ void MainWindow::open_camera_time_click()
             if(mObject.getColor()=="red" && mObject.getShape()>=5){
                 qDebug("yes,R circle!");
             }
-
         }
 
         break;
@@ -199,8 +207,14 @@ void MainWindow::open_camera_time_click()
         }
         break;
     default:
+        if (mThread->getC() != 0)
+        {
+            mThread->start();
+            mThread->setC(1);
+        }
         break;
     }
+
     int shape_num = mObject.getCount();
     if (shape_num >= 0)
     {

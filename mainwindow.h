@@ -8,7 +8,9 @@
 #include <opencv2/opencv.hpp>
 #include "ImageUtils.h"
 #include "detecting.h"
+#include "thread_motor.h"
 
+using namespace std;
 using namespace cv;
 
 QT_BEGIN_NAMESPACE
@@ -34,6 +36,9 @@ public:
     int time_num;
     Detecting *mDetecting;
     Object_Detect mObject;
+    thread_motor* mThread;
+
+
     //检测开关
     bool detect_w = false;
     enum {

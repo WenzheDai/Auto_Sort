@@ -25,7 +25,7 @@ include_directories(${pigpio_INCLUDE_DIRS})
 add_executable(Auto_Sort main.cpp detecting.h ImageUtils.h mainwindow.h
         object_detect.h detecting.cpp ImageUtils.cpp
         mainwindow.cpp object_detect.cpp motor/motor_control.cpp
-        motor/motor_control.h motor/motorDriver.cpp motor/motorDriver.h motor/motor.h motor/motor.cpp)
+        motor/motor_control.h motor/motorDriver.cpp motor/motorDriver.h thread_motor.cpp thread_motor.h)
 
 target_link_libraries(Auto_Sort pigpio)
 target_link_libraries(Auto_Sort ${OpenCV_LIBS})

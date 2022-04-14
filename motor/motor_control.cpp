@@ -1,7 +1,6 @@
 #include <iostream>
 #include "pigpio.h"
 #include "motor_control.h"
-#include "motorDriver.h"
 
 void motor_control::setMode()
 {
@@ -109,11 +108,11 @@ int motor_control::motor_turn(int x)
     setMode();
     if(x==0)
     {
-        motor_forward(angle(120));
+        motor_forward(angle(100));
     }
     if(x==1)
     {
-        motor_reverse(angle(120));
+        motor_reverse(angle(100));
     }
     gpioTerminate();  //stop the pigpio
 }
