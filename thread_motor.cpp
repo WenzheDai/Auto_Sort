@@ -3,6 +3,8 @@
 
 thread_motor::thread_motor()
 {
+    lastMotorStateOPP = false;
+    lastMotorStatePos = false;
 
 }
 
@@ -10,26 +12,30 @@ void thread_motor::run()
 {
     while(1)
     {
-        qDebug("run thread_motor");
-        if (getC() == 0)
+        if (get_run_motor() && !lastMotorStatePos)
         {
+            qDebug("run motor");
+            lastMotorStatePos=true;
             driver.MyDriver(&motorControl, &motor_control::motor_turn, 0);
-            break;
+            lastMotorStateOPP= false;
+            msleep(1000);
         }
-        if (getC() == 1)
+        else if (!get_run_motor() && !lastMotorStateOPP)
         {
+            qDebug("stop motor");
+            lastMotorStatePos = false;
             driver.MyDriver(&motorControl, &motor_control::motor_turn, 1);
-            break;
+            lastMotorStateOPP = true;
+            msleep(1000);
         }
 
     }
 }
 
-
-int thread_motor::getC() const {
-    return C;
+void thread_motor::set_run_motor(bool motor_state) {
+    mMotorState = motor_state;
 }
 
-void thread_motor::setC(int c) {
-    C = c;
+bool thread_motor::get_run_motor() {
+    return mMotorState;
 }

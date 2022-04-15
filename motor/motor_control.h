@@ -11,6 +11,12 @@ using namespace std;
 class motor_control
 {
 public:
+    //constructor
+    motor_control();
+
+    //destructor
+    ~motor_control();
+
     //set the GPIO level
     void setMode();
 

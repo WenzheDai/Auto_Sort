@@ -2,6 +2,13 @@
 #include "pigpio.h"
 #include "motor_control.h"
 
+motor_control::motor_control()
+{
+    gpioInitialise();   //init the librarys of pigpio
+    setMode();          //set the GPIO
+}
+
+
 void motor_control::setMode()
 {
     gpioSetMode(6,PI_OUTPUT);
@@ -104,8 +111,6 @@ int motor_control::angle(int angle)
 
 int motor_control::motor_turn(int x)
 {
-    if (gpioInitialise()<0) return -1;    //init the librarys of pigpio
-    setMode();
     if(x==0)
     {
         motor_forward(angle(100));
@@ -114,7 +119,11 @@ int motor_control::motor_turn(int x)
     {
         motor_reverse(angle(100));
     }
-    gpioTerminate();  //stop the pigpio
+}
+
+motor_control::~motor_control()
+{
+    gpioTerminate();     //stop the pigpio
 }
 
 

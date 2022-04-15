@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    mThread = new thread_motor();
+    mThread_motor = new thread_motor();
 
     mUtils = new ImageUtils();
     mUtils->setLED(ui->label_led_red, 0, 16);
@@ -60,7 +60,7 @@ void MainWindow::on_Bt_start_clicked()
     timer_run = new QTimer(this);
     connect(timer_run, SIGNAL(timeout()), this, SLOT(updateTime()));
     timer_run->start(1000);
-
+    mThread_motor->start();
 }
 
 
@@ -138,82 +138,189 @@ void MainWindow::open_camera_time_click()
 
     switch (m_color)
     {
-    case red:
-        if (m_shape == 0){
-            if(mObject.getColor()=="red" && mObject.getShape()==3){
-                qDebug("yes,R triangle!");
-                if (mThread->getC() != 1)
-                {
-                    cout<<mThread->getC()<<"***************";
-                    mThread -> setC(0);
-                    mThread -> start();
-                    mThread->terminate();
+        case red:
+            if (m_shape == 0){
+                if(mObject.getColor()=="red" && mObject.getShape()==3){
+                    qDebug("yes,R triangle!");
+                    mThread_motor->set_run_motor(true);
+                }else{
+                    mThread_motor->set_run_motor(false);
+                    qDebug("other ....");
+                }
+
+            }
+            else if (m_shape == 1) {
+                if(mObject.getColor()=="red" && mObject.getShape()==4){
+                    qDebug("yes,R square!");
+                    mThread_motor->set_run_motor(true);
+                }else{
+                    mThread_motor->set_run_motor(false);
+                    qDebug("other ....");
+                }
+
+            }
+            else if (m_shape == 2) {
+                if(mObject.getColor()=="red" && mObject.getShape()>=5){
+                    qDebug("yes,R circle!");
+                    mThread_motor->set_run_motor(true);
+                }else{
+                    mThread_motor->set_run_motor(false);
+                    qDebug("other ....");
                 }
 
             }
 
-        }
-        else if (m_shape == 1) {
-            if(mObject.getColor()=="red" && mObject.getShape()==4){
-                qDebug("yes,R square!");
-            }
+            break;
+        case yellow:
+            if (m_shape == 0){
+                if(mObject.getColor()=="yellow" && mObject.getShape()==3){
+                    qDebug("yes,Y triangle!");
+                    mThread_motor->set_run_motor(true);
+                }else{
+                    mThread_motor->set_run_motor(false);
+                    qDebug("other ....");
+                }
 
-        }
-        else if (m_shape == 2) {
-            if(mObject.getColor()=="red" && mObject.getShape()>=5){
-                qDebug("yes,R circle!");
             }
-        }
+            else if (m_shape == 1) {
+                if(mObject.getColor()=="yellow" && mObject.getShape()==4){
+                    qDebug("yes,Y square!");
+                    mThread_motor->set_run_motor(true);
+                }else{
+                    mThread_motor->set_run_motor(false);
+                    qDebug("other ....");
+                }
 
-        break;
-    case yellow:
-        if (m_shape == 0){
-            if(mObject.getColor()=="yellow" && mObject.getShape()==3){
-                qDebug("yes,Y triangle!");
             }
+            else if (m_shape == 2) {
+                if(mObject.getColor()=="yellow" && mObject.getShape()>=5){
+                    qDebug("yes,Y circle!");
+                    mThread_motor->set_run_motor(true);
+                }else{
+                    mThread_motor->set_run_motor(false);
+                    qDebug("other ....");
+                }
 
-        }
-        else if (m_shape == 1) {
-            if(mObject.getColor()=="yellow" && mObject.getShape()==4){
-                 qDebug("yes,Y square!");
             }
+            break;
+        case green:
+            if (m_shape == 0){
+                if(mObject.getColor()=="green" && mObject.getShape()==3){
+                    qDebug("yes,G triangle!");
+                    mThread_motor->set_run_motor(true);
+                }else{
+                    mThread_motor->set_run_motor(false);
+                    qDebug("other ....");
+                }
 
-        }
-        else if (m_shape == 2) {
-            if(mObject.getColor()=="yellow" && mObject.getShape()>=5){
-                qDebug("yes,Y circle!");
             }
+            else if (m_shape == 1) {
+                if(mObject.getColor()=="green" && mObject.getShape()==4){
+                    qDebug("yes,G square!");
+                    mThread_motor->set_run_motor(true);
+                }else{
+                    mThread_motor->set_run_motor(false);
+                    qDebug("other ....");
+                }
 
-        }
-        break;
-    case green:
-        if (m_shape == 0){
-            if(mObject.getColor()=="green" && mObject.getShape()==3){
-                qDebug("yes,G triangle!");
             }
+            else if (m_shape == 2) {
+                if(mObject.getColor()=="green" && mObject.getShape()>=5) {
+                    qDebug("yes,G circle!");
+                    mThread_motor->set_run_motor(true);
+                }else{
+                    mThread_motor->set_run_motor(false);
+                    qDebug("other ....");
+                }
 
-        }
-        else if (m_shape == 1) {
-            if(mObject.getColor()=="green" && mObject.getShape()==4){
-                qDebug("yes,G square!");
             }
-
-        }
-        else if (m_shape == 2) {
-            if(mObject.getColor()=="green" && mObject.getShape()>=5) {
-                qDebug("yes,G circle!");
-            }
-
-        }
-        break;
-    default:
-        if (mThread->getC() != 0)
-        {
-            mThread->start();
-            mThread->setC(1);
-        }
-        break;
+            break;
+        default:
+            break;
     }
+
+
+//    switch (m_color)
+//    {
+//    case red:
+//        if (m_shape == 0){
+//            if(mObject.getColor()=="red" && mObject.getShape()==3){
+//                qDebug("yes,R triangle!");
+//                if (mThread->getC() != 1)
+//                {
+//                    mThread -> setC(0);
+//                    mThread -> start();
+//                    mThread -> setC(1);
+//                    mThread -> exit();
+//                }
+//            }
+//            else
+//            {
+//                if (mThread->getC() == 1)
+//                {
+//                    mThread -> start();
+//                    mThread -> setC(0);
+//                    mThread -> exit();
+//                }
+//            }
+//
+//        }
+//        else if (m_shape == 1) {
+//            if(mObject.getColor()=="red" && mObject.getShape()==4){
+//                qDebug("yes,R square!");
+//            }
+//
+//        }
+//        else if (m_shape == 2) {
+//            if(mObject.getColor()=="red" && mObject.getShape()>=5){
+//                qDebug("yes,R circle!");
+//            }
+//        }
+//
+//        break;
+//    case yellow:
+//        if (m_shape == 0){
+//            if(mObject.getColor()=="yellow" && mObject.getShape()==3){
+//                qDebug("yes,Y triangle!");
+//            }
+//
+//        }
+//        else if (m_shape == 1) {
+//            if(mObject.getColor()=="yellow" && mObject.getShape()==4){
+//                 qDebug("yes,Y square!");
+//            }
+//
+//        }
+//        else if (m_shape == 2) {
+//            if(mObject.getColor()=="yellow" && mObject.getShape()>=5){
+//                qDebug("yes,Y circle!");
+//            }
+//
+//        }
+//        break;
+//    case green:
+//        if (m_shape == 0){
+//            if(mObject.getColor()=="green" && mObject.getShape()==3){
+//                qDebug("yes,G triangle!");
+//            }
+//
+//        }
+//        else if (m_shape == 1) {
+//            if(mObject.getColor()=="green" && mObject.getShape()==4){
+//                qDebug("yes,G square!");
+//            }
+//
+//        }
+//        else if (m_shape == 2) {
+//            if(mObject.getColor()=="green" && mObject.getShape()>=5) {
+//                qDebug("yes,G circle!");
+//            }
+//
+//        }
+//        break;
+//    default:
+//        break;
+//    }
 
     int shape_num = mObject.getCount();
     if (shape_num >= 0)

@@ -36,7 +36,7 @@ public:
     int time_num;
     Detecting *mDetecting;
     Object_Detect mObject;
-    thread_motor* mThread;
+    thread_motor* mThread_motor;
 
 
     //检测开关

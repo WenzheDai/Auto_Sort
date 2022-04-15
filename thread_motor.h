@@ -10,18 +10,16 @@ class thread_motor : public QThread{
     Q_OBJECT
 public:
     thread_motor();
+    void set_run_motor(bool motor_state);
+    bool get_run_motor();
     motorDriver driver;
     motor_control motorControl;
 
 private:
-    int C;
-public:
-    int getC() const;
-
-    void setC(int c);
-
-private:
     void run();
+    bool mMotorState;
+    bool lastMotorStatePos;
+    bool lastMotorStateOPP;
 
 };
 
