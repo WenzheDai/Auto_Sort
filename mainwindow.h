@@ -17,12 +17,16 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+/*!
+ * @file mainwindow.h
+ * @brief build the mainwindow for Qt application. And logic for object detection and motor operation
+ */
+class MainWindow : public QMainWindow {
+Q_OBJECT
 
 public:
     MainWindow(QWidget *parent = nullptr);
+
     ~MainWindow();
 
     ImageUtils *mUtils;
@@ -30,16 +34,16 @@ public:
     VideoCapture cap;
     Mat frame;
     QGraphicsScene *scene = new QGraphicsScene;
-    QTimer *Time_camera ;//camera的更新时间
+    QTimer *Time_camera;// Refreash time for camera
     QTimer *timer_run;
     QTime *time;
     int time_num;
     Detecting *mDetecting;
     Object_Detect mObject;
-    thread_motor* mThread_motor;
+    thread_motor *mThread_motor;
 
 
-    //检测开关
+    // Detection switch
     bool detect_w = false;
     enum {
         red, yellow, green, square, circle, triangle
@@ -48,16 +52,19 @@ public:
     int m_shape;
 
 
-
 private slots:
-    //内联
+
+//    Inline
     void on_Bt_start_clicked();
+
     void open_camera_time_click();
 
+//    color: Red, Yellow, Green
     void On_Changed_R();
     void On_Changed_Y();
     void On_Changed_G();
 
+//    shape: triangle, square, circle
     void On_Changed_T();
     void On_Changed_S();
     void On_Changed_C();
@@ -65,7 +72,9 @@ private slots:
     void updateTime();
 
     void on_Bt_stop_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
+
 #endif // MAINWINDOW_H

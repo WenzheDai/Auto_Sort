@@ -5,7 +5,10 @@
 #include "motor/motorDriver.h"
 #include "motor/motor_control.h"
 
-
+/*!
+ * @file thread_motor.h
+ * @brief used for control motor in thread
+ */
 class thread_motor : public QThread{
     Q_OBJECT
 public:
@@ -17,8 +20,8 @@ public:
 
 private:
     void run();
-    bool mMotorState;
-    bool lastMotorStatePos;
+    bool mMotorState; //motor state: True=clockwise, False=counterclockwise
+    bool lastMotorStatePos; //store motor position
     bool lastMotorStateOPP;
 
 };

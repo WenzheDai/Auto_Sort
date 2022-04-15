@@ -3,18 +3,26 @@
 #include <iostream>
 using namespace std;
 
-/*
- * This file contains the operations of our group with the motor.
- * We use the library of pigpio to program the pins.
+/*!
+ * @file motor_control.h
+ * @brief This file contains the operations of our group with the motor.
+ *        We use the library of pigpio to program the pins.
  */
 
 class motor_control
 {
 public:
-    //constructor
+    /*
+     * Constructor
+     * init the librarys of pigpio
+     */
     motor_control();
 
-    //destructor
+
+    /*
+     * Destructor
+     * terminate the pigpio library
+     */
     ~motor_control();
 
     //set the GPIO level

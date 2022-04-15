@@ -3,6 +3,10 @@
 #include <iostream>
 
 using namespace std;
+/*!
+ * @file object_detect.h
+ * @brief class for object with color and shape
+ */
 class Object_Detect
 {
 public:

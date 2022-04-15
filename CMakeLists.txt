@@ -36,7 +36,7 @@ target_link_libraries(Auto_Sort
         )
 
 
-
+# Qt
 if (WIN32)
     set(DEBUG_SUFFIX)
     if (CMAKE_BUILD_TYPE MATCHES "Debug")
