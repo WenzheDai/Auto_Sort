@@ -21,6 +21,8 @@ find_package(Qt5 COMPONENTS
 find_package(OpenCV REQUIRED)
 
 include_directories(${pigpio_INCLUDE_DIRS})
+include_directories(motor)
+include_directories(detection)
 
 add_executable(Auto_Sort main.cpp detection/detecting.h detection/ImageUtils.h detection/mainwindow.h
         detection/object_detect.h detection/detecting.cpp detection/ImageUtils.cpp
@@ -36,6 +38,9 @@ target_link_libraries(Auto_Sort
         )
 # Add directory for unit test
 add_subdirectory(Google_tests)
+include_directories(motor)
+add_subdirectory(motor)
+target_link_libraries(Auto_Sort motor Google_tests)
 
 
 # Qt

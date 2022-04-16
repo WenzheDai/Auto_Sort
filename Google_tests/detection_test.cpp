@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include "motor_control.h"
 
 // Demonstrate some basic assertions.
 TEST(Google_tests, BasicAssertions) {
