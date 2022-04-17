@@ -13,16 +13,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SOURCE_FILES main.cpp)
 
 find_package(pigpio REQUIRED)
-find_package(Qt5 COMPONENTS
-        Core
-        Gui
-        Widgets
-        REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+#find_package(OpenCV REQUIRED core imgproc highgui)
 find_package(OpenCV REQUIRED)
 
 include_directories(${pigpio_INCLUDE_DIRS})
-include_directories(motor)
-include_directories(detection)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
 
 add_executable(Auto_Sort main.cpp detection/detecting.h detection/ImageUtils.h detection/mainwindow.h
         detection/object_detect.h detection/detecting.cpp detection/ImageUtils.cpp
@@ -37,10 +34,10 @@ target_link_libraries(Auto_Sort
         Qt5::Widgets
         )
 # Add directory for unit test
-add_subdirectory(Google_tests)
+#add_subdirectory(unit_tests)
 include_directories(motor)
-add_subdirectory(motor)
-target_link_libraries(Auto_Sort motor Google_tests)
+#add_subdirectory(motor)
+#target_link_libraries(Auto_Sort motor Google_tests)
 
 
 # Qt
@@ -73,3 +70,35 @@ if (WIN32)
     endforeach (QT_LIB)
 endif ()
 
+# Google tests
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+add_executable(
+        motor_test
+        unit_tests/motor_test.cpp
+        detection/detecting.h detection/ImageUtils.h detection/mainwindow.h
+        detection/object_detect.h detection/detecting.cpp detection/ImageUtils.cpp
+        detection/mainwindow.cpp detection/object_detect.cpp motor/motor_control.cpp
+        motor/motor_control.h motor/motorDriver.cpp motor/motorDriver.h motor/thread_motor.cpp motor/thread_motor.h
+)
+target_link_libraries(
+        motor_test
+        gtest_main
+        ${OpenCV_LIBS}
+        Qt5::Core
+        Qt5::Gui
+        Qt5::Widgets
+        pigpio
+)
+
+include(GoogleTest)
+gtest_discover_tests(motor_test)
