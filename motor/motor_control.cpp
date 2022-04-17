@@ -114,11 +114,14 @@ int motor_control::motor_turn(int x)
     if(x==0)
     {
         motor_forward(angle(100));
+        return 1;
     }
     if(x==1)
     {
         motor_reverse(angle(100));
+        return 1;
     }
+    return 0;
 }
 
 motor_control::~motor_control()
