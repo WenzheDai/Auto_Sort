@@ -2,8 +2,8 @@
 #include "motor/motor_control.h"
 
 
-// Demonstrate some basic assertions.
-TEST(motor_test, BasicAssertions) {
+
+TEST(motor_test, MotorMove) {
     motor_control m;
     EXPECT_EQ(m.motor_turn(1),1);
 }
