@@ -22,7 +22,7 @@ QT_END_NAMESPACE
  * @brief build the mainwindow for Qt application. And logic for object detection and motor operation
  */
 class MainWindow : public QMainWindow {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     MainWindow(QWidget *parent = nullptr);

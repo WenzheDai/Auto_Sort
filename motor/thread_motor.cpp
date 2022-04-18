@@ -18,7 +18,7 @@ void thread_motor::run()
             lastMotorStatePos=true;
             driver.MyDriver(&motorControl, &motor_control::motor_turn, 0);
             lastMotorStateOPP= false;
-            msleep(1000);
+            msleep(500);
         }
         else if (!get_run_motor() && !lastMotorStateOPP)
         {
@@ -26,7 +26,7 @@ void thread_motor::run()
             lastMotorStatePos = false;
             driver.MyDriver(&motorControl, &motor_control::motor_turn, 1);
             lastMotorStateOPP = true;
-            msleep(1000);
+            msleep(500);
         }
 
     }

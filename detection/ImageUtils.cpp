@@ -1,7 +1,12 @@
 #include "ImageUtils.h"
+#include <iostream>
 
 ImageUtils::ImageUtils() {
+    std::cout<<"Image ok ***********************************************************";
+}
 
+ImageUtils::~ImageUtils() {
+    std::cout<<"Image delete ***********************************************************";
 }
 
 void ImageUtils::setLED(QLabel *label, int color, int size) {

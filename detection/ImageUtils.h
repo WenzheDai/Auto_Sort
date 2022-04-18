@@ -11,6 +11,7 @@
 class ImageUtils {
 public:
     ImageUtils();
+    ~ImageUtils();
 
     void setLED(QLabel *label, int color, int size);
 };

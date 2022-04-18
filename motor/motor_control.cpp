@@ -8,7 +8,6 @@ motor_control::motor_control()
     setMode();          //set the GPIO
 }
 
-
 void motor_control::setMode()
 {
     gpioSetMode(6,PI_OUTPUT);

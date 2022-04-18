@@ -220,6 +220,7 @@ void MainWindow::open_camera_time_click() {
             }
             break;
         default:
+            mThread_motor->set_run_motor(false);
             break;
     }
 
@@ -234,7 +235,10 @@ void MainWindow::open_camera_time_click() {
     cv::resize(frame, frame, Size(380, 280));
     QImage showImage = QImage(frame.data, frame.cols, frame.rows, QImage::Format_RGB888);
     // Add a file with a file path of fileName (QString type) to the container
+    scene->clear();
     scene->addPixmap(QPixmap::fromImage(showImage));
+
+
     // Show container with graphicsView（QGraphicsView class）
     ui->graphicsView_Camera->setScene(scene);
     // Start showing

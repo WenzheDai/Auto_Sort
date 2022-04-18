@@ -16,12 +16,13 @@ using namespace cv;
 class Detecting {
 public:
     Detecting();
+    ~Detecting();
 
     void setCameraImage(Mat src);
 
     Object_Detect detectColor();
 
-    int detectShape();
+//    int detectShape();
 
 private:
     Mat frame;

@@ -1,9 +1,14 @@
 #include "detecting.h"
+#include <iostream>
 
 
 Detecting::Detecting() {
-
+    std::cout<<"detecting 被调用+++++++++++++++++++++++++++++++++++++++++++++++++++++";
 }
+Detecting::~Detecting() {
+    std::cout<<"detecting 被释放******************************************************";
+}
+
 
 void Detecting::setCameraImage(Mat src) {
     frame = src;
@@ -133,11 +138,10 @@ void Detecting::morphOps(Mat &thresh) {
 
     dilate(thresh, thresh, dilateElement);
     dilate(thresh, thresh, dilateElement);
-    //imshow("th", thresh);
 }
 
 
-/****************************************************shape************************************************/
-int Detecting::detectShape() {
-    return 0;
-}
+///****************************************************shape************************************************/
+//int Detecting::detectShape() {
+//    return 0;
+//}
