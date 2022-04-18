@@ -82,7 +82,7 @@ void Detecting::processMask(Mat &mMask, Object_Detect &mObject, string mColor) {
             // Only need the object with the largest area
             // Iterate and compare it to the area in the next iteration
 
-            qDebug("area = %f", area);
+            //qDebug("area = %f", area);
             if (area > MIN_OBJECT_AREA) {
                 int cx = int(moment.m10 / area);
                 int cy = int(moment.m01 / area);
@@ -108,7 +108,7 @@ void Detecting::processMask(Mat &mMask, Object_Detect &mObject, string mColor) {
                 int epsilon = shape_param * arcLength(contours[index], true);
                 approxPolyDP(contours[index], point, epsilon, true);
                 //printf("point = %d \n", point.size());
-                qDebug("point.size() = %d", point.size());
+                //qDebug("point.size() = %d", point.size());
                 //draw object location on screen
                 //drawObject(objects,cameraFeed);
                 drawContours(frame, contours, index, (128), 1, 8, hierarchy);

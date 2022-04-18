@@ -43,7 +43,7 @@ private:
     const int FRAME_WIDTH = 640 / 4;
     const int FRAME_HEIGHT = 480 / 4;
     // Set the size range for object detected
-    const int MIN_OBJECT_AREA = 500;
+    const int MIN_OBJECT_AREA = 2000;
     const int MAX_OBJECT_AREA = FRAME_HEIGHT * FRAME_WIDTH / 1;
 
     // Polygon Fitting Accuracy Parameters，range（0.01-0.10）

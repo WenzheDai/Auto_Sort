@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     mUtils->setLED(ui->label_led_circle, 0, 16);
     mUtils->setLED(ui->label_led_Triangle, 0, 16);
 
-    ui->label_team->setText("team_name");
+    ui->label_team->setText("Team member: Wenzhe Dai, Yiqi Li, Xiaohang Yu, Yuzhong Ding");
     ui->groupBox->setStyleSheet("background-color: rgba(200,200,200,1)");
 
 
