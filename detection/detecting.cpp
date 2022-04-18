@@ -126,7 +126,7 @@ void Detecting::processMask(Mat &mMask, Object_Detect &mObject, string mColor) {
 
 void Detecting::morphOps(Mat &thresh) {
     // Create structural elements for "expanding" and "eroding" images.
-    //the element chosen here is a 3px by 3px rectangle
+    //the element chosen here is a 2px by 2px rectangle
     Mat erodeElement = getStructuringElement(MORPH_RECT, Size(2, 2));
     // Dilate with larger element so make sure object is nicely visible
     Mat dilateElement = getStructuringElement(MORPH_RECT, Size(3, 3));//8,8
@@ -139,7 +139,7 @@ void Detecting::morphOps(Mat &thresh) {
 }
 
 
-///****************************************************shape************************************************/
-//int Detecting::detectShape() {
-//    return 0;
-//}
+/****************************************************shape************************************************/
+int Detecting::detectShape() {
+    return 0;
+}

@@ -22,7 +22,7 @@ public:
 
     Object_Detect detectColor();
 
-//    int detectShape();
+    int detectShape();
 
 private:
     Mat frame;
@@ -47,7 +47,7 @@ private:
     const int MAX_OBJECT_AREA = FRAME_HEIGHT * FRAME_WIDTH / 1;
 
     // Polygon Fitting Accuracy Parameters，range（0.01-0.10）
-    double shape_param = 0.045;
+    double shape_param = 0.043;//0.045
 
 private:
     void processMask(Mat &mMask, Object_Detect &mObject, string mColor);
