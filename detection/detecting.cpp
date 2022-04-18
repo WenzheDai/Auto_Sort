@@ -3,10 +3,8 @@
 
 
 Detecting::Detecting() {
-    std::cout<<"detecting 被调用+++++++++++++++++++++++++++++++++++++++++++++++++++++";
 }
 Detecting::~Detecting() {
-    std::cout<<"detecting 被释放******************************************************";
 }
 
 

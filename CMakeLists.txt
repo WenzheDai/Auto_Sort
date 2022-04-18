@@ -83,15 +83,15 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(
-        motor_test
-        unit_tests/motor_test.cpp
+        unit_test
+        unit_tests/unit_test.cpp
         detection/detecting.h detection/ImageUtils.h detection/mainwindow.h
         detection/object_detect.h detection/detecting.cpp detection/ImageUtils.cpp
         detection/mainwindow.cpp detection/object_detect.cpp motor/motor_control.cpp
         motor/motor_control.h motor/motorDriver.cpp motor/motorDriver.h motor/thread_motor.cpp motor/thread_motor.h
 )
 target_link_libraries(
-        motor_test
+        unit_test
         gtest_main
         ${OpenCV_LIBS}
         Qt5::Core
@@ -101,4 +101,4 @@ target_link_libraries(
 )
 
 include(GoogleTest)
-gtest_discover_tests(motor_test)
+gtest_discover_tests(unit_test)

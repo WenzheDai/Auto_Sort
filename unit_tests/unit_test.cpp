@@ -1,6 +1,19 @@
 #include <gtest/gtest.h>
 #include "motor/motor_control.h"
+#include "detection/detecting.h"
+#include "detection/object_detect.h"
 #include "pigpio.h"
+#include "opencv2/opencv.hpp"
+
+#include <iostream>
+#include <string>
+#include <filesystem>
+#include <unistd.h>
+
+using std::cout; using std::cin;
+using std::endl; using std::string;
+
+using namespace cv;
 
 class motorTest : public ::testing::Test
 {
@@ -16,6 +29,16 @@ protected:
 
     }
     motor_control m;
+};
+
+
+class detectionTest : public ::testing::Test {
+protected:
+    void SetUp() {
+    }
+    Mat frame;
+    Detecting detecting;
+    Object_Detect mObject;
 };
 
 TEST_F(motorTest, SetMode)
@@ -44,6 +67,23 @@ TEST_F(motorTest, Motormove) {
 TEST_F(motorTest, angle)
 {
     EXPECT_EQ(m.angle(60), (int)(60/0.70312))<<"the angle compute ok!";
+}
+
+TEST_F(detectionTest, colorRGY)
+{
+    Mat frame = imread("../unit_tests/testImage/green.jpg");
+//    char *cwd = get_current_dir_name();
+//    cout << "Current working directory: " << cwd << endl;
+//    free(cwd);
+//    std::cout<<frame;
+    cv::resize(frame, frame, Size(frame.cols /4, frame.rows /4));
+    detecting.setCameraImage(frame);
+    mObject = detecting.detectColor();
+    string rColor = mObject.getColor();
+    string eColor = "green";
+    std::cout<<rColor;
+    int ret = rColor.compare(eColor);
+    EXPECT_EQ(ret, 0);
 }
 
 
