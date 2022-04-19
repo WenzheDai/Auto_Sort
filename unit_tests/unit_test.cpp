@@ -31,29 +31,29 @@ protected:
 TEST_F(motorTest, SetMode)
 {
     m.setMode();
-    EXPECT_EQ(gpioGetMode(6), 1)<<"the GPIO 6 put PI_OUTPUT";
-    EXPECT_EQ(gpioGetMode(13), 1)<<"the GPIO 13 put PI_OUTPUT";
-    EXPECT_EQ(gpioGetMode(19), 1)<<"the GPIO 19 put PI_OUTPUT";
-    EXPECT_EQ(gpioGetMode(26), 1)<<"the GPIO 26 put PI_OUTPUT";
+    EXPECT_EQ(gpioGetMode(6), 1)<<"the GPIO 6 is not put PI_OUTPUT";
+    EXPECT_EQ(gpioGetMode(13), 1)<<"the GPIO 13 is not put PI_OUTPUT";
+    EXPECT_EQ(gpioGetMode(19), 1)<<"the GPIO 19 is not put PI_OUTPUT";
+    EXPECT_EQ(gpioGetMode(26), 1)<<"the GPIO 26 is not put PI_OUTPUT";
 }
 
 TEST_F(motorTest, Writelevel)
 {
     m.setStep(1, 1, 1, 1);
-    EXPECT_EQ(gpioRead(6), 1)<<"Write the level of GPIO 6 OK!";
-    EXPECT_EQ(gpioRead(13), 1)<<"Write the level of GPIO 6 OK!";
-    EXPECT_EQ(gpioRead(19), 1)<<"Write the level of GPIO 6 OK!";
-    EXPECT_EQ(gpioRead(26), 1)<<"Write the level of GPIO 6 OK!";
+    EXPECT_EQ(gpioRead(6), 1)<<"Write the level of GPIO 6 failure!";
+    EXPECT_EQ(gpioRead(13), 1)<<"Write the level of GPIO 6 failure!";
+    EXPECT_EQ(gpioRead(19), 1)<<"Write the level of GPIO 6 failure!";
+    EXPECT_EQ(gpioRead(26), 1)<<"Write the level of GPIO 6 failure!";
 }
 
 TEST_F(motorTest, Motormove) {
-    EXPECT_EQ(m.motor_turn(1),1)<<"the motor forward OK!";
-    EXPECT_EQ(m.motor_turn(0), 1)<<"the motor reverse OK!";
+    EXPECT_EQ(m.motor_turn(1),1)<<"the motor forward failure!";
+    EXPECT_EQ(m.motor_turn(0), 1)<<"the motor reverse failure!";
 }
 
 TEST_F(motorTest, angle)
 {
-    EXPECT_EQ(m.angle(60), (int)(60/0.70312))<<"the angle compute ok!";
+    EXPECT_EQ(m.angle(60), (int)(60/0.70312))<<"the angle compute failure!";
 }
 
 
@@ -78,8 +78,8 @@ TEST_F(detectionTest, colorG)
     mObject = detecting.detectColor();
     string gColor = mObject.getColor();
     int g = gColor.compare("green");
-    EXPECT_EQ(g, 0)<<"green check pass";
-    EXPECT_EQ(mObject.getShape(), 4)<<"square check pass";
+    EXPECT_EQ(g, 0)<<"green check did not pass";
+    EXPECT_EQ(mObject.getShape(), 4)<<"square check did not pass";
 }
 
 TEST_F(detectionTest, colorR)
@@ -91,7 +91,7 @@ TEST_F(detectionTest, colorR)
     mObject = detecting.detectColor();
     string rColor = mObject.getColor();
     int r = rColor.compare("red");
-    EXPECT_EQ(r, 0)<<"red check pass"<<rColor;
+    EXPECT_EQ(r, 0)<<"red check did not pass"<<rColor;
 }
 
 TEST_F(detectionTest, colorY)
@@ -102,7 +102,7 @@ TEST_F(detectionTest, colorY)
     mObject = detecting.detectColor();
     string yColor = mObject.getColor();
     int r = yColor.compare("yellow");
-    EXPECT_EQ(r, 0)<<"yellow check pass";
+    EXPECT_EQ(r, 0)<<"yellow check did not pass";
 }
 
 TEST_F(detectionTest, shapeC)
@@ -112,7 +112,7 @@ TEST_F(detectionTest, shapeC)
     detecting.setCameraImage(circle);
     mObject = detecting.detectColor();
     int cir = mObject.getShape();
-    EXPECT_GE(cir, 5)<<"check circle pass";
+    EXPECT_GE(cir, 5)<<"check circle did not pass";
 }
 
 TEST_F(detectionTest, shapeT)
