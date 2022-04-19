@@ -2,6 +2,7 @@
 An automatic real-time system for detection and sorting things.
 ## Demo
 A shrot video shows how Auto Sort work on Youtube.
+
 [![](https://res.cloudinary.com/marcomontalbano/image/upload/v1650308343/video_to_markdown/images/youtube--slp1gwdWYJk-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/slp1gwdWYJk "")
 ## Requirements
 * [OpenCV 4.5.3](https://github.com/opencv/opencv) on Raspberry Pi
@@ -35,11 +36,28 @@ The workingflow of this device is to transport the target objects smoothly to th
 
 In order to make sure the device works properly, it can be divided into 3 parts, i.e. pipeline mechanism, sorting mechanism and camera. The pipeline mechanism includes wooden racks, conveyor tracks and DC drive motor; sorting mechanism includes a baffle and a stepper motor. The camera and steper motor are connected to the Raspberry Pi, and the DC motors are powered directly from AA batteries. Following is the sketch of the first version of design.
 
+![image](https://raw.githubusercontent.com/WenzheDai/Auto_Sort/master/media/sketch.jpg)
 
 ### Installation Guide
-#### 
+#### pipeline mechanism
+The pipeline mechanism is based on wood rack. The track is driven by a DC motor powered by four AA batteries. The motor is fixed on the side of the drive shaft, and the battery box is fixed under the conveyor belt to ensure the consistency of the whole set. A purple conveyor belt is recommended to improve detection accuracy.
+#### sorting mechanism
+Connect the baffle to the drive shaft of the stepping motor, and then fix the stepping motor under the end of the conveyer belt to ensure that the object can hit the baffle when it falls. The stepper motor is connected to the Raspberry Pi through the driver board, which needs to be powered by four AA batteries.
+#### camera
+This device uses a USB micro camera to connect directly to the Raspberry Pi. The camera is fixed directly above the end of the conveyor belt, and it is necessary to avoid objects other than the crawler in the detection range.
+#### wiring
+The connection method of the stepper motor and camera to the Raspberry Pi is shown in the following figure:
 
+![image](https://raw.githubusercontent.com/WenzheDai/Auto_Sort/master/media/circuit.jpeg)
+The pin diagram of Raspberry Pi is shown in the following figure :
+
+![image](https://raw.githubusercontent.com/WenzheDai/Auto_Sort/master/media/RaspberryPi.jpeg)
 ### Cost Estimation
+* Raspberry Pi: £43.5
+* pipeline mechanism: £6.5
+* Sorting mechanism: £5
+* Camera: £15
+* Total: £70
 ## Project Directory Tree
 
     |–– detection
