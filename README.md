@@ -12,7 +12,7 @@ A shrot video shows how Auto Sort work on Youtube.
 * [Google Tests](https://github.com/google/googletest)
 ## How to
 ### Deploy
-1. Build a new directory name "cmake-build".
+1. Build a new directory named "cmake-build-debug".
 2. Move in to the new directory, run the following commands in the terminal.
    ```
    cmake ..
@@ -20,14 +20,12 @@ A shrot video shows how Auto Sort work on Youtube.
    ```
 3. Run `sudo ./Auto_Sort`
 ### Test
-1. Move to your project directory. (where CMakeLists.txt located)
-2. Run the following commands for building.
+1. Deploy first.
+2. Move in to directory named "cmake-build-debug".
+3. Run following command in the terminal.
+    ```
+   sudo ./unit_test
    ```
-   cmake -S . -B build
-   cmake --build build
-   cd build && ctest
-   ```
-3. Tests result will show in terminal window.
 
 ## Hardware Building
 ### Material Preparation
@@ -58,6 +56,17 @@ The pin diagram of Raspberry Pi is shown in the following figure :
 * Sorting mechanism: £5
 * Camera: £15
 * Total: £70
+## Real-Time Responsiveness
+The program adopts multi-threading and asynchronous callback mechanism. When OpenCV calls the camera and starts to video successfully, the program will take frame of the object on the conveyor belt at a speed of 30 FPS and sent it to Raspberry Pi.
+
+When the software analyses the incoming frame of picture captured by camera and successfully recognizes it, it will immediately send a detection signal and send a request to wake up another thread. The code enters the next thread and calls back the motor driver, the stepper motor turns and controls the baffle to turn around. This motor thread is continuing running, but the motor is sleeping until the camera loses the target object capture signal, the motor will be called back again to return to the initial position.
+
+### Delay Analysis
+In this project, the event response is mainly achieved by waking up the motor drive thread. We believe that the real-time performance of this system is mainly reflected in the sum of the single-frame image processing time of image processing thread, and the time of thread switching, plus the time signal arrives GPIO port connected to the motor drive, which should be lower than the time difference that can be distinguished by the naked eye.
+
+In our test, time taken up by detecting shape and color is less than 20ms, which means that the detection can be done early than next frame(can be done in 1/30 s).
+
+![image](https://raw.githubusercontent.com/WenzheDai/Auto_Sort/master/media/detectionTime.png)
 ## Project Directory Tree
 
     |–– detection

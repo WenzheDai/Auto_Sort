@@ -91,7 +91,7 @@ TEST_F(detectionTest, colorR)
     mObject = detecting.detectColor();
     string rColor = mObject.getColor();
     int r = rColor.compare("red");
-    EXPECT_EQ(r, 0)<<"red check pass";
+    EXPECT_EQ(r, 0)<<"red check pass"<<rColor;
 }
 
 TEST_F(detectionTest, colorY)
